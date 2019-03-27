@@ -9,6 +9,7 @@ import os
 #     def write(self, text):
 #         print('Tu zapisuje do pliku text: ' + text)
 
+
 class logger(object):
     def __init__(self,
                  logger_name=os.path.basename(__file__),
