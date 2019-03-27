@@ -23,3 +23,12 @@ logger.info('info message')
 logger.warning('warn message')
 logger.error('error message')
 logger.critical('critical message')
+
+# class logger(object):
+#     def __init__(self, file_path):
+#         print('Nowy logger!')
+#         self.file_path = file_path
+#         print('To jest sciezka pliku: ' + self.file_path)
+
+#     def write(self, text):
+#         print('Tu zapisuje do pliku text: ' + text)
