@@ -1,5 +1,15 @@
-def open_file(xfile=None, xmode='r'):
+def open_file(xfile='input.txt', xmode='r', xprints=True):
     """
+    Parameters:
+        xfile (str) - name of file to be opened, default 'input.txt'
+        xmode (str) - mode you want to open the file
+        xprints (bool) - if True function will print stuff in console
+
+    Returns:
+        Array - file with splitines
+        or
+        None - if IOError
+
     Available modes:
         'r' - read, default
         'w' - write, WARNING - it overwrites the file if the file exists
@@ -7,12 +17,8 @@ def open_file(xfile=None, xmode='r'):
         'r+' - read and write, pointer at the beginning of the file
         'w+' - r and w, WARNING - it overwrites the file if the file exists
         'a+' - r and w, pointer at the end of the file
-    Returns file with splitines or None if IOError
     """
-    if (xfile == None):  # check file name
-        print('File name not provided. Default: input.txt')
-        xfile = 'input.txt'
-    else:
+    if xprints:
         print('File name: ' + xfile)
 
     try:  # open file
@@ -20,6 +26,7 @@ def open_file(xfile=None, xmode='r'):
             xfile = fd.read().splitlines()
         return xfile
     except IOError:
-        print('Error opening the file: ' + xfile)
+        if xprints:
+            print('Error opening the file: ' + xfile)
         # exit(1)
         return None
