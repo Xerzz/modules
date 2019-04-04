@@ -27,12 +27,12 @@ def open_file(xfile='input.txt', xmode='r', xprints=True):
     if xprints:
         print('File name: ' + xfile)
 
-    try:  # open file
+    # open file
+    try:
         with open(str(xfile), xmode) as fd:
             xfile = fd.read().splitlines()
         return xfile
     except IOError:
         if xprints:
             print('Error opening the file: ' + xfile)
-        # exit(1)
         return None
