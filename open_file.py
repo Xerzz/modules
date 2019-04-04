@@ -18,6 +18,7 @@ def open_file(xfile='input.txt', xmode='r', xprints=True):
         'w+' - r and w, WARNING - it overwrites the file if the file exists
         'a+' - r and w, pointer at the end of the file
     """
+
     if xmode not in ['r', 'r+', 'w', 'w+', 'a', 'a+']:
         if xprints:
             print('Wrong mode chosed, setting default - r')
