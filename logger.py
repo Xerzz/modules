@@ -1,11 +1,10 @@
 import logging
-import os
-import sys
+from sys import argv
+from os import path
 
-file_name = os.path.basename(sys.argv[0])
+file_name = path.basename(argv[0])
 # logging_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 logging_format = '%(asctime)s - %(levelname)s - %(message)s'
-
 
 
 class Logger(object):

@@ -1,5 +1,6 @@
 import time
 
+
 def TicTocGenerator():
     # Generator that returns time differences
     ti = 0  # initial time
