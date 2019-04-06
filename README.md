@@ -10,7 +10,7 @@ I have for now:
 I hope You enjoy it.
 
 ## Usage:
-> logger:  
+> logger: <br />
 `import logger`
 then create logger:
 `log = logger.Logger()`
@@ -31,7 +31,7 @@ log file has default name same as file name but in quotes and with .log
 also it is in new folder called 'logs'
 Example: python_file.py -> 'python_file.py'.log in 'logs' folder
 
-> tictoc:
+> tictoc: <br />
 just use
 `tic()`
 and
