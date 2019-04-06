@@ -1,8 +1,8 @@
 import logging
+import os
 from sys import argv
-from os import path
 
-file_name = path.basename(argv[0])
+file_name = os.path.basename(argv[0])
 # logging_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 logging_format = '%(asctime)s - %(levelname)s - %(message)s'
 
@@ -12,6 +12,9 @@ class Logger(object):
                  logger_name=file_name,
                  log_file_name="'" + file_name + "'.log"
                  ):
+        if not os.path.exists('logs'):
+            os.mkdir('logs')
+
         self.xlogger = logging.getLogger(logger_name)
         self.logging_file = logging.FileHandler(
             "logs/" + log_file_name

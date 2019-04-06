@@ -1,4 +1,10 @@
-def open_file(xfile='input.txt', xmode='r', xprints=True):
+"""
+Simple module that help us opening file
+"""
+
+def open_file(xfile: str = 'input.txt',
+              xmode: str = 'r',
+              xprints: bool = True):
     """
     Parameters:
         xfile (str) - name of file to be opened, default 'input.txt'
@@ -6,9 +12,10 @@ def open_file(xfile='input.txt', xmode='r', xprints=True):
         xprints (bool) - if True function will print stuff in console
 
     Returns:
-        Array - file with splitines
-        or
-        None - if IOError
+        list - file with splitines
+
+    Raises:
+        IOError - when there is no file or when there is another problem with file (permissions etc...)
 
     Available modes:
         'r' - read, default
@@ -21,7 +28,7 @@ def open_file(xfile='input.txt', xmode='r', xprints=True):
 
     if xmode not in ['r', 'r+', 'w', 'w+', 'a', 'a+']:
         if xprints:
-            print('Wrong mode chosed, setting default - r')
+            print('WARNING: Wrong mode chosed, setting default - r')
         xmode = 'r'
 
     if xprints:
@@ -33,6 +40,7 @@ def open_file(xfile='input.txt', xmode='r', xprints=True):
             xfile = fd.read().splitlines()
         return xfile
     except IOError:
-        if xprints:
-            print('Error opening the file: ' + xfile)
-        return None
+        # if xprints:
+            # print('Error opening the file: ' + xfile)
+        # return None
+        raise IOError('Error opening the file' + xfile)
