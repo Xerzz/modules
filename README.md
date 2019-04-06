@@ -10,8 +10,7 @@ I have for now:
 I hope You enjoy it.
 
 ## Usage:
-> logger:
-\n
+> logger:  
 `import logger`
 then create logger:
 `log = logger.Logger()`
