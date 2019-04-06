@@ -32,10 +32,11 @@ also it is in new folder called 'logs'
 Example: python_file.py -> 'python_file.py'.log in 'logs' folder
 
 * tictoc:  
+`import tictoc`
 just use
-`tic()`
+`tictoc.tic()`
 and
-`toc()`
+`tictoc.toc()`
 functions
 
 You can use toc multiple times
