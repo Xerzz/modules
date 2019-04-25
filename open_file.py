@@ -2,6 +2,7 @@
 Simple module that help us opening file
 """
 
+
 def open_file(xfile: str = 'input.txt',
               xmode: str = 'r',
               xprints: bool = True):
@@ -44,3 +45,16 @@ def open_file(xfile: str = 'input.txt',
             # print('Error opening the file: ' + xfile)
         # return None
         raise IOError('Error opening the file' + xfile)
+
+
+class File(object):
+    def __init__(self, filename, mode):
+        self.filename = filename
+        self.mode = mode
+
+    def __enter__(self):
+        self.file = open(self.filename, self.mode)
+        return self.file
+
+    def __exit__(self, *args):
+        self.file.close()
