@@ -29,7 +29,7 @@ def hash_password(password, salt=None):
     return pass_hash + salt
 
 
-def validate_password(password, hashed_password):
+def validate_hashed_password(password, hashed_password):
     # Do input validation
     if not isinstance(password, str):
         raise TypeError("Password should be a string")
