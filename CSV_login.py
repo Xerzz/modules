@@ -23,11 +23,13 @@ for attempt in range(Cfg.login_max_attempts):
     if user_found:
         break
 
+if not user_found:
+    raise NameError('Wrong username')
 
 user_logged = False
 for attempt in range(Cfg.login_max_attempts):
     user_password = getpass()
-    if h.validate_password(user_password, passwords[index]):
+    if h.validate_hashed_password(user_password, passwords[index]):
         user_logged = True
         print()
         print('Success!')
@@ -37,7 +39,12 @@ for attempt in range(Cfg.login_max_attempts):
         print('Invalid password!')
         print('You have', (Cfg.login_max_attempts - 1) - attempt, 'attempts left')
 
-del users, passwords
+if not user_logged:
+    raise NameError('Wrong password!')
 
-# exit(0 if user_logged else 1)
-# exit(username)
+del users, passwords
+user_id = index
+
+
+def get_user_info():
+    return [user_id, username]
