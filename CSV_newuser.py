@@ -1,11 +1,7 @@
 from getpass import getpass
 import modules.hashing_passwords as h
 import modules.CSV_read_headers as My_CSV
-
-filename = 'CSV_users.csv'
-delimiter = ';'
-username_len = 3
-password_len = 6
+import CSV_config as Cfg
 
 
 def has_numbers(input_string):
@@ -16,7 +12,8 @@ def has_upper(input_string):
     return any(char.isupper() for char in input_string)
 
 
-column = My_CSV.read_csv(filename, delimiter)
+column = My_CSV.read_csv(Cfg.filename, Cfg.delimiter)
+ids = column['id']
 users = column['user']
 
 username_free = False
@@ -26,8 +23,8 @@ while not username_free:
     if username in users:
         print('This username is already taken. Please choose another name.\n')
     else:
-        if len(username) < username_len:
-            print('Username should be at least', username_len, 'characters long')
+        if len(username) < Cfg.min_username_len:
+            print('Username should be at least', Cfg.min_username_len, 'characters long')
         username_free = True
 
 account_created = False
@@ -36,8 +33,8 @@ while not account_created:
     print('Password should have at least 6 characters, one uppercase letter and one digit')
     password_v1 = getpass('Enter password: ')
 
-    if len(password_v1) < password_len:
-        print('Password should be at least', password_len, 'characters long')
+    if len(password_v1) < Cfg.min_password_len:
+        print('Password should be at least', Cfg.min_password_len, 'characters long')
         continue
     elif not has_upper(password_v1):
         print('Password should have at least one uppercase letter')
@@ -57,8 +54,10 @@ hashed_password = h.hash_password(password_v1)
 del password_v1
 del password_v2
 
-with open(filename, 'a') as f:
-    f.write(username + delimiter + hashed_password + '\n')
+user_id = int(ids[-1]) + 1
+
+with open(Cfg.filename, 'a') as f:
+    f.write(str(user_id) + Cfg.delimiter + username + Cfg.delimiter + hashed_password + '\n')
 
 
 # IN PROGRESS
