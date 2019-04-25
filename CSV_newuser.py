@@ -60,6 +60,9 @@ del password_v2
 with open(filename, 'a') as f:
     f.write(username + delimiter + hashed_password + '\n')
 
+
+# IN PROGRESS
+
 # column['user'].append(username)
 # column['password'].append(hashed_password)
 #
