@@ -32,8 +32,7 @@ for attempt in range(Cfg.login_max_attempts):
     if h.validate_hashed_password(user_password, passwords[index]):
         user_logged = True
         print()
-        print('Success!')
-        print('Logging in...')
+        print('Success! Logging in...')
         break
     else:
         print('Invalid password!')
