@@ -1,7 +1,6 @@
-from getpass import getpass
 import modules.hashing_passwords as h
 import modules.CSV_read_headers as My_CSV
-import CSV_config as Cfg
+import modules.CSV_config as Cfg
 import modules.password_validation as pv
 
 column = My_CSV.read_csv_headers(Cfg.filename, Cfg.delimiter)
