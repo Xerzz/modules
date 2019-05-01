@@ -3,7 +3,7 @@ import modules.hashing_passwords as h
 import modules.CSV_read_headers as My_CSV
 import CSV_config as Cfg
 
-column = My_CSV.read_csv(Cfg.filename, Cfg.delimiter)
+column = My_CSV.read_csv_headers(Cfg.filename, Cfg.delimiter)
 ids = column['id']
 users = column['user']
 passwords = column['password']
