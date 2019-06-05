@@ -13,9 +13,11 @@ while not username_free:
 
     if username in users:
         print('This username is already taken. Please choose another name.\n')
+        continue
+    elif len(username) < Cfg.min_username_len:
+        print('Username should be at least', Cfg.min_username_len, 'characters long')
+        continue
     else:
-        if len(username) < Cfg.min_username_len:
-            print('Username should be at least', Cfg.min_username_len, 'characters long')
         username_free = True
 
 password = pv.validate_password()
@@ -46,3 +48,4 @@ with open(Cfg.filename, 'a') as f:
 
 print()
 print('Success! Account created')
+print()
