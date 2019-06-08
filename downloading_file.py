@@ -28,4 +28,4 @@ def download_zip(url, extract=True, delete=True):
             zip_file.extractall(short_filename)
 
     if delete:
-        os.remove(full_filename[0])
+        os.remove(full_filename)
