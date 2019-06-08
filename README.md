@@ -8,6 +8,7 @@ I have for now:
 * CSV support
 * hashing passwords
 * tictoc
+* downloading files
 
 I hope You enjoy it.
 
@@ -66,3 +67,16 @@ t.tic()
 t.toc()
 ```
 Take a look for documentation in file.
+
+* download_file
+
+Usage:
+```python
+import modules.downloading_file as d
+
+url1 = 'http://example.com/text.txt'
+url2 = 'http://example.com/zipfile.zip'
+
+d.download(url1)
+d.download_zip(url2)
+```
