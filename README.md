@@ -70,7 +70,6 @@ Take a look for documentation in file.
 
 * download_file
 
-Usage:
 ```python
 import modules.downloading_file as d
 
