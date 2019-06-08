@@ -32,14 +32,14 @@ class TicToc(object):
     """
     Replicate the functionality of MATLAB's tic and toc.
 
-    #Methods
-    TicToc.tic()       #start or re-start the timer
-    TicToc.toc()       #return and print elapsed time since timer start
+    Methods:
+        TicToc.tic()       #start or re-start the timer
+        TicToc.toc()       #return and print elapsed time since timer start
 
-    #Attributes
-    TicToc.start     #Time from timeit.default_timer() when t.tic() was last called
-    TicToc.end       #Time from timeit.default_timer() when t.toc() was last called
-    TicToc.elapsed   #t.end - t.start; i.e., time elapsed from t.start when t.toc() was last called
+    Attributes:
+        TicToc.start     #Time from timeit.default_timer() when t.tic() was last called
+        TicToc.end       #Time from timeit.default_timer() when t.toc() was last called
+        TicToc.elapsed   #t.end - t.start; i.e., time elapsed from t.start when t.toc() was last called
     """
 
     def __init__(self):
