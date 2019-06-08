@@ -15,7 +15,10 @@ def _get_filename_from_url(url: str):
 
 
 def download(url):
-    urllib.request.urlretrieve(url, os.getcwd() + '/' + _get_filename_from_url(url)[0])
+    full_filename, short_filename = _get_filename_from_url(url)
+    if full_filename == short_filename:
+        full_filename = full_filename + '.html'
+    urllib.request.urlretrieve(url, os.getcwd() + '/' + full_filename)
 
 
 def download_zip(url, extract=True, delete=True):
