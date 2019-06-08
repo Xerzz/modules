@@ -23,7 +23,7 @@ def validate_password(min_password_len=6, max_password_len=20, should_have_digit
             print('Password should be at least', min_password_len, 'characters long')
             continue
         elif len(password_v1) > max_password_len:
-            print('Password should have maximum 20 characters')
+            print('Password should have maximum', max_password_len, 'characters')
             continue
         if should_have_digit and not _has_numbers(password_v1):
             print('Password should have at least one digit')
