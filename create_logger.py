@@ -5,8 +5,9 @@ from sys import argv
 
 filename = os.path.basename(argv[0])
 xlist = filename.split('.')
-xlist.pop(-1)
-filename = '.'.join(xlist)
+if len(xlist) > 1:
+    xlist.pop(-1)
+    filename = '.'.join(xlist)
 
 
 def _create_logs_dir(inside_folder_name=None):
