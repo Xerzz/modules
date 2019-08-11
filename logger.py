@@ -7,7 +7,7 @@ file_name = os.path.basename(argv[0])
 logging_format = '%(asctime)s - %(levelname)s - %(message)s'
 
 
-class Logger(object):
+class CreateLogger(object):
     def __init__(self,
                  logger_name=file_name,
                  log_file_name="'" + file_name + "'.log"
@@ -46,3 +46,6 @@ class Logger(object):
 
     def critical(self, critical_message):
         self.xlogger.critical(critical_message)
+
+    def exception(self, exception_message):
+        self.xlogger.exception(exception_message)
