@@ -17,23 +17,35 @@ I hope You enjoy it!
 * logger:  
 
 ```python
-import logger
-log = logger.Logger()
+from create_logger import CreateLogger
+log = CreateLogger(stream_handler=True, file_handler=False)
 
 log.info('some info')
 log.debug('some info')
 log.warning('some info')
 log.error('some info')
 log.critical('some info')
+
+try:
+    x += 2
+except:
+    log.add_file_handler()
+    log.exception('Only when exception!')
+
+log.change_level('warning')
+log.change_format('%(message)s')
 ```
 
 Sample log file line:
 
 `2019-03-27 20:52:27,471 - INFO - some info`
 
-log file has default name same as file name, but in quotes and with .log.
+Select if You want file handler or stream handler (cmd). You can add them later!
+File handlers are default TimedRotatingFileHandlers, od course You can change it
+
+log file has default name same as file name, with .log.
 Also it is in new folder called 'logs'  
-Example: python_file.py -> 'python_file.py'.log in new 'logs' folder
+Example: python_file.py -> python_file.log in new 'logs' folder
 
 * CSV modules:
 
