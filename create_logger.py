@@ -1,13 +1,17 @@
-__all__ = ['create_logger']
+__all__ = ['CreateLogger']
 
+import logging
 import os
+from logging.handlers import TimedRotatingFileHandler
 from sys import argv
 
+# getting filename
 filename = os.path.basename(argv[0])
-xlist = filename.split('.')
-if len(xlist) > 1:
-    xlist.pop(-1)
-    filename = '.'.join(xlist)
+# if file has dots in name
+tmp_list = filename.split('.')
+if len(tmp_list) > 1:
+    tmp_list.pop(-1)
+    filename = '.'.join(tmp_list)
 
 
 def _create_logs_dir(inside_folder_name=None):
@@ -17,42 +21,100 @@ def _create_logs_dir(inside_folder_name=None):
         os.mkdir(f'logs/{inside_folder_name}')
 
 
-def create_logger(logger_name=filename,
-                  stream_handler=False,
-                  time_rotated_file=True,
-                  inside_folder=False,
-                  days_to_keep=7,
-                  alternative_logging_format=False):
-    import logging
-    global filename
-    log = logging.getLogger(logger_name)
+class CreateLogger(object):
+    def __init__(self, logger_name=filename,
+                 stream_handler=False,
+                 file_handler=True,
+                 time_rotated_file=True,
+                 days_to_keep=7,
+                 log_inside_folder=False):
+        # create logger
+        self._log = logging.getLogger(logger_name)
+        self.file_handler = None
+        self.cmd_handler = None
+        self.loglevel = logging.DEBUG
+        # create logs directories
+        if log_inside_folder:
+            _create_logs_dir(logger_name)
+            self._logfile_name = f'{filename}/{filename}.log'
+        else:
+            _create_logs_dir()
+            self._logfile_name = f'{filename}.log'
+        # create log format
+        self._log_format = None
+        self.change_format()
+        # adding file handler
+        if file_handler or stream_handler is False:
+            self.add_file_handler(time_rotated_file, days_to_keep)
+        # adding stream handler
+        if stream_handler or file_handler is False:
+            self.add_stream_handler()
+        # setting level
 
-    if inside_folder:
-        _create_logs_dir(filename)
-        logfile_path = 'logs/{0}/{0}.log'.format(filename)
-    else:
-        _create_logs_dir()
-        logfile_path = f'logs/{filename}.log'
+        self._log.setLevel(self.loglevel)
 
-    if alternative_logging_format:
-        logging_format = '%(asctime)s %(filename)s [%(levelname)s] %(message)s'
-    else:
-        logging_format = '%(asctime)s - %(filename)s - %(levelname)s - %(message)s'
-    formatter = logging.Formatter(logging_format)
+    def debug(self, debug_message):
+        self._log.debug(debug_message)
 
-    level = logging.DEBUG
-    log.setLevel(level)
+    def info(self, info_message):
+        self._log.info(info_message)
 
-    if time_rotated_file:
-        from logging.handlers import TimedRotatingFileHandler
-        file_handler = TimedRotatingFileHandler(logfile_path, 'midnight', 1, days_to_keep, 'UTF-8')
-    else:
-        file_handler = logging.FileHandler(logfile_path, encoding='UTF-8')
-    file_handler.setFormatter(formatter)
-    log.addHandler(file_handler)
+    def warning(self, warning_message):
+        self._log.warning(warning_message)
 
-    if stream_handler:
-        xstream_handler = logging.StreamHandler()
-        xstream_handler.setFormatter(formatter)
-        log.addHandler(xstream_handler)
-    return log
+    def error(self, error_message):
+        self._log.error(error_message)
+
+    def critical(self, critical_message):
+        self._log.critical(critical_message)
+
+    def exception(self, exception_message='', one_line=True, delimiter='|'):
+        if one_line:
+            import traceback
+            exception = delimiter.join(traceback.format_exc().split('\n'))
+            self._log.error(f'{exception_message} {delimiter}{exception}')
+        else:
+            self._log.exception(exception_message)
+
+    def add_stream_handler(self):
+        self.cmd_handler = logging.StreamHandler()
+        self.cmd_handler.setLevel(self.loglevel)
+        self.cmd_handler.setFormatter(self._log_format)
+        self._log.addHandler(self.cmd_handler)
+
+    def add_file_handler(self, time_rotated_file=True, days_to_keep=7):
+        if time_rotated_file:
+            self.file_handler = TimedRotatingFileHandler(f'logs/{self._logfile_name}',
+                                                         'midnight', 1, days_to_keep, 'UTF-8')
+        else:
+            self.file_handler = logging.FileHandler(f'logs/{self._logfile_name}', encoding='UTF-8')
+        self.file_handler.setLevel(self.loglevel)
+        self.file_handler.setFormatter(self._log_format)
+        self._log.addHandler(self.file_handler)
+
+    def change_level(self, level):
+        if level == 'info' or level == 20:
+            self.loglevel = logging.INFO
+        elif level == 'warning' or level == 30:
+            self.loglevel = logging.WARNING
+        elif level == 'error' or level == 40:
+            self.loglevel = logging.ERROR
+        elif level == 'critical' or level == 50:
+            self.loglevel = logging.CRITICAL
+        else:
+            self.loglevel = logging.DEBUG
+
+        if self.file_handler:
+            self.file_handler.setLevel(self.loglevel)
+        if self.cmd_handler:
+            self.cmd_handler.setLevel(self.loglevel)
+
+    def change_format(self, log_format='%(asctime)s - %(filename)s - %(levelname)s - %(message)s'):
+        self._log_format = logging.Formatter(log_format)
+        if self.file_handler:
+            self.file_handler.setFormatter(self._log_format)
+        if self.cmd_handler:
+            self.cmd_handler.setFormatter(self._log_format)
+
+    def handlers(self):
+        return self._log.handlers
